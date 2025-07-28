@@ -29,53 +29,12 @@ class DocumentProcessor:
 }
 
 
-    # def __init__(self, pdf_path):
-    #     """
-    #     Initializes the DocumentProcessor with the path to a PDF file.
-        
-    #     Args:
-    #         pdf_path (str): The file path of the PDF to process.
-    #     """
-    #     self.pdf_path = pdf_path
-    #     # Add a check to ensure the file can be opened
-    #     try:
-    #         self.doc = fitz.open(pdf_path)
-    #     except Exception as e:
-    #         print(f"Failed to open or read PDF: {pdf_path}")
-    #         raise e
-
     def __init__(self, doc_object):
         """
         Initializes the processor with an open fitz.Document object.
         """
         self.doc = doc_object
 
-    # def _get_document_title(self):
-    #     """
-    #     Extracts the document title from metadata, with a fallback to the
-    #     largest text on the first page.
-    #     """
-    #     # Prioritize metadata title
-    #     if self.doc.metadata and self.doc.metadata.get('title'):
-    #         title = self.doc.metadata['title'].strip()
-    #         if title:
-    #             return title
-
-    #     # Fallback: find the largest font size on the first page
-    #     max_size = 0
-    #     title_text = ""
-    #     if len(self.doc) > 0:
-    #         page = self.doc[0] # Always check the first page
-    #         blocks = page.get_text("dict", flags=fitz.TEXTFLAGS_TEXT)["blocks"]
-    #         for block in blocks:
-    #             if block['type'] == 0:  # Text block
-    #                 for line in block['lines']:
-    #                     for span in line['spans']:
-    #                         if span['size'] > max_size:
-    #                             max_size = span['size']
-    #                             title_text = span['text'].strip()
-            
-    #     return title_text if title_text else "Untitled Document"
 
     def _get_document_title(self):
         """
@@ -117,27 +76,6 @@ class DocumentProcessor:
 
         return "Untitled Document"
 
-
-    # def _analyze_text_styles(self):
-    #     """
-    #     Analyzes the document to find the most common font size, assumed to be body text.
-    #     """
-    #     sizes = []
-    #     for page in self.doc:
-    #         blocks = page.get_text("dict", flags=fitz.TEXTFLAGS_TEXT)["blocks"]
-    #         for block in blocks:
-    #             if block['type'] == 0:
-    #                 for line in block['lines']:
-    #                     for span in line['spans']:
-    #                         sizes.append(round(span['size']))
-        
-    #     if not sizes:
-    #         return 12.0 # Default body font size if no text is found
-
-    #     count = Counter(sizes)
-    #     # FIX 1: .most_common(1) returns a list like [(12, 50)]. We need the first item's key.
-    #     body_font_size = count.most_common(1)[0][0] 
-    #     return float(body_font_size)
 
 
     def _extract_all_lines(self):
@@ -268,46 +206,7 @@ class DocumentProcessor:
         recombined.append(current_line)
         return recombined
 
-    # def _classify_headings(self, body_font_size):
-    #     """
-    #     Classifies text blocks as headings based on font size, weight, and patterns.
-    #     """
-    #     headings = []
-    #     for page_num, page in enumerate(self.doc):
-    #         blocks = page.get_text("dict", flags=fitz.TEXTFLAGS_TEXT)["blocks"]
-    #         for block in blocks:
-    #             if block['type'] == 0:  # Text block
-    #                 for line in block['lines']:
-    #                     if not line['spans']:
-    #                         continue
-                        
-    #                     first_span = line['spans'][0] # Use the first span for style
-    #                     line_text = "".join(s['text'] for s in line['spans']).strip()
-    #                     font_size = round(first_span['size'])
-    #                     font_name = first_span['font'].lower()
-                        
-    #                     if not line_text: # Skip empty lines
-    #                         continue
-
-    #                     is_heading = False
-    #                     # Rules for identifying a heading
-    #                     if font_size > body_font_size * 1.15: is_heading = True
-    #                     if 'bold' in font_name: is_heading = True
-    #                     if len(line_text) < 100 and not line_text.endswith('.') and font_size > body_font_size: is_heading = True
-    #                     if re.match(r'^\d+(\.\d+)*\s|\b[A-Z]\.\s', line_text): is_heading = True
-
-    #                     # Filter out false positives
-    #                     if len(line_text.split()) > 25: is_heading = False
-    #                     if not is_heading: continue
-
-    #                     headings.append({
-    #                         'text': line_text,
-    #                         'page': page_num + 1,
-    #                         'size': font_size
-    #                     })
-    #     return headings
-
-
+ 
 
     def _is_heading(self, line, body_font_size, body_color):
         """
@@ -382,35 +281,7 @@ class DocumentProcessor:
                 })
         return outline
 
-    # def process(self):
-    #     """
-    #     Orchestrates the entire PDF processing workflow.
-    #     """
-    #     title = self._get_document_title()
-        
-    #     # 1. Extract properties for all lines first
-    #     all_lines = self._extract_all_lines()
-        
-    #     # 2. Analyze styles to find the body font size
-    #     # We can now do this more efficiently from our extracted list
-    #     all_sizes = [line['size'] for line in all_lines]
-    #     if not all_sizes:
-    #         body_font_size = 12.0 # Default
-    #     else:
-    #         body_font_size = Counter(all_sizes).most_common(1)[0][0]
-
-    #     # 3. Classify headings using the extracted data
-    #     classified_headings = self._classify_headings(all_lines, float(body_font_size))
-        
-    #     # 4. Determine hierarchy from the classified headings
-    #     outline = self._determine_hierarchy(classified_headings)
-        
-    #     self.doc.close()
-
-    #     return {
-    #         "title": title,
-    #         "outline": outline
-    #     }
+   
 
     def process(self):
         """
