@@ -24,11 +24,10 @@ This design ensures consistent performance even on unstructured or OCR-based PDF
 - PyMuPDF: For PDF parsing and layout extraction.
 - collections.Counter: For computing dominant styles (e.g., body font size).
 - re and json: For heading identification and structured output formatting.
-- (Optional): An alternative ML-powered version (document_processor_with_MLModel.py) uses:
+- An ML-powered version (document_processor_.py) uses:
   - KeyBERT
   - SentenceTransformers for offline keyword extraction.
 
-⚠ The main implementation used in main.py is based on rule-based heuristics only and does *not* require a machine learning model.
 
 ## ⚙ How to Build and Run
 
