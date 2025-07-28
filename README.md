@@ -51,15 +51,15 @@ project/
 
 ### 🧪 Build the Docker Image
 
-bash
+```
 docker build -t pdf-outline-extractor .
-
+```
 
 ### 🚀 Run the Container
 
-bash
+```
 docker run --rm -v $(pwd)/input:/app/input -v $(pwd)/output:/app/output pdf-outline-extractor
-
+```
 
 - Mounts the local input/ and output/ directories to the container.
 - All .pdf files in input/ will be processed.
