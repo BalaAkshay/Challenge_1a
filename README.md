@@ -38,7 +38,6 @@ This solution is fully containerized with Docker. You can build and run it easil
 
 
 project/
-│
 ├── Dockerfile
 ├── requirements.txt
 ├── main.py
@@ -46,8 +45,8 @@ project/
 │   └── document_processor.py
 ├── input/
 │   └── [PDF files to process]
-├── output/
-│   └── [JSON outputs will be saved here]
+└── output/
+    └── [JSON outputs will be saved here]
 
 
 ### 🧪 Build the Docker Image
