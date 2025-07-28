@@ -65,31 +65,6 @@ docker run --rm -v $(pwd)/input:/app/input -v $(pwd)/output:/app/output pdf-outl
 - All .pdf files in input/ will be processed.
 - Results are saved as .json files in output/.
 
-## ✅ Example Output
-
-**Example: output/STEMPathwaysFlyer.json**
-
-json
-{
-  "title": "Parsippany -Troy Hills STEM Pathways",
-  "outline": [
-    {
-      "level": "H3",
-      "text": "Mission Statement:",
-      "page": 1
-    },
-    {
-      "level": "H2",
-      "text": "PATHWAY OPTIONS",
-      "page": 1
-    },
-    {
-      "level": "H1",
-      "text": "What Colleges Say!",
-      "page": 2
-    }
-  ]
-}
 
 
 ## 🧩 Notes
