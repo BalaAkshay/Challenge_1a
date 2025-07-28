@@ -36,7 +36,7 @@ This solution is fully containerized with Docker. You can build and run it easil
 
 ### 📁 Directory Structure
 
-
+```
 project/
 ├── Dockerfile
 ├── requirements.txt
@@ -47,7 +47,7 @@ project/
 │   └── [PDF files to process]
 └── output/
     └── [JSON outputs will be saved here]
-
+```
 
 ### 🧪 Build the Docker Image
 
